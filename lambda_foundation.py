@@ -66,9 +66,9 @@ def handler(event, context):
     if ext in resources.dsm_filetypes:
         bounds = get_dsm_bounds(aoi_download_path)
     elif ext in resources.mesh_filetypes:
-        bounds = get_mesh_bounds(aoi_download_path)
+        ...
     elif ext in resources.pcloud_filetypes:
-        bounds = get_pointcloud_bounds(aoi_download_path)
+        ...
     else:
         raise UnsupportedFileType(f"File type '{ext}' is not supportd.")
 
