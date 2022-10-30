@@ -20,7 +20,7 @@ RUN pip install .
 
 # Lambda
 RUN pip install awslambdaric
-COPY lambda_coregister.py .
+COPY aws/lambda_coregister.py .
 
 ENTRYPOINT [ "python", "-m", "awslambdaric" ]
 CMD [ "lambda_coregister.handler" ]

@@ -37,10 +37,6 @@ def handler(event, context):
         record = records[0]
 
     # download aoi file
-    bucket = record["s3"]["bucket"]["name"]
-    if bucket != AOI_BUCKET:
-        raise ValueError("Incorrect AOI bucket name")
-
     aoi_file = record["s3"]["object"]["key"]
     aoi_download_path = f"/tmp/{aoi_file}"
     s3_client.download_file(AOI_BUCKET, aoi_file, aoi_download_path)
@@ -63,18 +59,16 @@ def handler(event, context):
 
     # register aoi image to foundation image
     registered_aoi_file_path = run_codem(foundation_download_path, aoi_download_path)
-    registered_aoi_file = os.path.basename(registered_aoi_file_path)
+    registered_aoi_filename = os.path.basename(registered_aoi_file_path)
+    registered_aoi_s3_path = (
+        f"{os.path.splitext(os.path.basename(aoi_file))[0]}/{registered_aoi_filename}"
+    )
     logger.info("Registered AOI to Foundation")
 
     # upload registered aoi
     s3_client.upload_file(
         registered_aoi_file_path,
         REGISTERED_AOI_BUCKET,
-        registered_aoi_file,
+        registered_aoi_s3_path,
     )
-    logger.info(f"Uploaded registered aoi file to s3: {registered_aoi_file}")
-
-    # next steps:
-    #   - save registered aoi to unique folder in s3 along with 
-    #     the other metadata that is produced
-    #   - save the USGS 3DEP foundation to the same directory
+    logger.info(f"Uploaded registered aoi file to s3: {registered_aoi_s3_path}")
