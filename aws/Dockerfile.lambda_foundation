@@ -1,0 +1,26 @@
+FROM continuumio/miniconda3
+
+# Install missing cv2 dependency
+RUN apt-get update
+RUN apt-get install -y libgl1
+
+# Create and activate the Conda environment
+COPY environment.yml .
+RUN conda env create -f environment.yml
+
+# Automatically activate the conda environment
+RUN echo "source activate codem" >> ~/.bashrc
+ENV PATH /opt/conda/envs/codem/bin:$PATH
+
+# Install CODEM
+COPY src ./src
+COPY readme.md .
+COPY setup.py .
+RUN pip install .
+
+# Lambda
+RUN pip install awslambdaric
+COPY aws/lambda_coregister.py .
+
+ENTRYPOINT [ "python", "-m", "awslambdaric" ]
+CMD [ "lambda_coregister.handler" ]
