@@ -25,8 +25,8 @@ class UnsupportedFileType(Exception):
     """File type not supported"""
 
 
-AOI_BUCKET = "codem-aoi-df"
-FOUNDATION_BUCKET = "codem-foundation-df"
+AOI_BUCKET = "codem-aoi-step"
+RESULT_BUCKET = "codem-aoi-registered-step"
 STAC_API = "https://planetarycomputer.microsoft.com/api/stac/v1"
 
 logger = logging.getLogger()
@@ -35,7 +35,7 @@ logger.setLevel(logging.INFO)
 s3_client = boto3.client("s3")
 
 
-def dsm_foundation_bbox(aoi_path: str, buffer_factor: Optional[float] = 2) -> List[float]:
+def dsm_foundation_bbox(aoi_path: str, buffer_factor: Optional[float] = 4) -> List[float]:
     if "BUFFER_FACTOR" in os.environ:
         buffer_factor = float(os.environ.get("BUFFER_FACTOR"))
     with rasterio.open(aoi_path) as dsm:
@@ -152,17 +152,11 @@ def crop_dsm(path: str, bbox: Tuple[float], destination: str) -> str:
 
 
 def handler(event, context):
-    records = event["Records"]
-    if len(records) > 1:
-        raise ValueError("Only a single AOI file at a time can be uploaded")
-    else:
-        record = records[0]
-
     # download aoi file
-    aoi_file = record["s3"]["object"]["key"]
-    aoi_download_path = f"/tmp/{aoi_file}"
-    s3_client.download_file(AOI_BUCKET, aoi_file, aoi_download_path)
-    logger.info(f"Downloaded aoi file from s3: {aoi_file}")
+    aoi_filename = event["detail"]["object"]["key"]
+    aoi_download_path = f"/tmp/{aoi_filename}"
+    s3_client.download_file(AOI_BUCKET, aoi_filename, aoi_download_path)
+    logger.info(f"Downloaded aoi file from s3: {aoi_filename}")
 
     # get foundation bbox (buffered rough aoi bbox) in wgs84
     ext = Path(aoi_download_path).suffix
@@ -200,14 +194,23 @@ def handler(event, context):
         logger.info("Foundation DSM cropped to foundation bounding box.")
 
         # upload foundation dsm
-        foundation_filename = f"{Path(aoi_file).stem}-foundation.tif"
-        foundation_directory = f"{Path(aoi_file).stem}-{time.strftime('%Y%m%d_%H%M%S')}"
-        foundation_s3_path = (
-            f"{foundation_directory}/{foundation_filename}"
+        foundation_filename = f"{Path(aoi_filename).stem}-foundation.tif"
+        result_directory = f"{Path(aoi_filename).stem}-{time.strftime('%Y%m%d_%H%M%S')}"
+        s3_upload_path = (
+            f"{result_directory}/{foundation_filename}"
         )
         s3_client.upload_file(
             cropped_dsm_path,
-            FOUNDATION_BUCKET,
-            foundation_s3_path,
+            RESULT_BUCKET,
+            s3_upload_path,
         )
-        logger.info(f"Uploaded foundation DSM file to s3: {foundation_s3_path}")
+        logger.info(f"Uploaded foundation DSM file to s3: {s3_upload_path}")
+
+    # return a dict that will be passed to the next lambda in the event parameter
+    return {
+        "aoi_bucket": AOI_BUCKET,
+        "aoi_filename": aoi_filename,
+        "result_bucket": RESULT_BUCKET,
+        "result_directory": result_directory,
+        "foundation_filename": foundation_filename
+    }

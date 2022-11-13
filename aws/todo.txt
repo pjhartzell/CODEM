@@ -1,2 +1,1 @@
-- Add USGS foundation tif to registered AOI s3 directory
-- Add registration metadata files to registered AOI s3 directory
+

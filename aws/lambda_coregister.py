@@ -1,11 +1,11 @@
 import dataclasses
 import logging
 import os
+import time
 
 import boto3
 
 import codem
-
 
 AOI_BUCKET = "codem-aoi"
 REGISTERED_AOI_BUCKET = "codem-aoi-registered"
@@ -60,12 +60,15 @@ def handler(event, context):
     # register aoi image to foundation image
     registered_aoi_file_path = run_codem(foundation_download_path, aoi_download_path)
     registered_aoi_filename = os.path.basename(registered_aoi_file_path)
-    registered_aoi_s3_path = (
-        f"{os.path.splitext(os.path.basename(aoi_file))[0]}/{registered_aoi_filename}"
+    result_directory = (
+        f"{os.path.splitext(os.path.basename(aoi_file))[0]}-"
+        f"{time.strftime('%Y%m%d_%H%M%S')}"
     )
+    registered_aoi_s3_path = f"{result_directory}/{registered_aoi_filename}"
     logger.info("Registered AOI to Foundation")
 
     # upload registered aoi
+    # ADD TIMESTAMP TO DIRECTORY
     s3_client.upload_file(
         registered_aoi_file_path,
         REGISTERED_AOI_BUCKET,

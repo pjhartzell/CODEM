@@ -5,8 +5,8 @@ RUN apt-get update
 RUN apt-get install -y libgl1
 
 # Create and activate the Conda environment
-COPY environment.yml .
-RUN conda env create -f environment.yml
+COPY aws/environment_coregister.yml .
+RUN conda env create -f environment_coregister.yml
 
 # Automatically activate the conda environment
 RUN echo "source activate codem" >> ~/.bashrc

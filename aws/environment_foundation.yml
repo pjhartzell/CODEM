@@ -1,0 +1,17 @@
+name: codem
+channels:
+  - conda-forge
+dependencies:
+  - python-pdal
+  - opencv
+  - rasterio
+  - trimesh
+  - matplotlib
+  - scikit-image
+  - enlighten
+  - numpy==1.20.3
+  - typing-extensions
+  - boto3
+  - planetary-computer
+  - pystac-client
+  - shapely
