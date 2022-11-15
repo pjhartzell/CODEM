@@ -1,1 +1,1 @@
-
+Switch to REST API and implement validation via json schema model

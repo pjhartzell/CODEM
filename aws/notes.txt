@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Type: application/json" -d '{"MessageBody":{"test_key1": "test_value1", "test_key2": "test_value2"}}' https://axwlxpwh02.execute-api.us-east-1.amazonaws.com/codem
