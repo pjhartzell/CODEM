@@ -1,35 +1,35 @@
 ## Methods
 
-1. AOI bucket trigger: static Foundation
+1. AOI bucket with static Foundation
 
     ```mermaid
     flowchart LR
-        S3_AOI["AOI <br> Bucket"] -- trigger --> lambda
-        S3_FND["FND <br> Bucket"] --> lambda
-        lambda --> S3_RST["Result <br> Bucket"]
+        id1["AOI <br> bucket"]--trigger-->lambda
+        id2["FND <br> bucket"]-->lambda
+        lambda-->S3_RST["result <br> bucket"]
     ```
 
-2. AOI bucket trigger: dynamic Foundation
+2. AOI bucket with step function and dynamic Foundation
 
 ```mermaid
 flowchart LR
     subgraph id0["step function"]
         direction LR
-        id1["lambda <br> 3DEP FND"] --> id2["lambda <br> coregister"]
+        id1["lambda <br> dynamic FND"] --> id2["lambda <br> coregister"]
     end
-    id3["AOI <br> Bucket"] -- event --> id0
-    id4["PC 3DEP"] --> id1
-    id2 --> id5["Result <br> Bucket"]
+    id3["AOI <br> bucket"]--event-->id0
+    id0-->id4["result <br> bucket"]
+    id5["PC 3DEP"]-->id0
 ```
 
-3. Queue feeders:
-    - Bucket create event
-    - API POST
+3. AOI bucket and API feeding a queue
 
 ```mermaid
 flowchart LR
-    S3_AOI["AOI <br> Bucket"]-- event -->SQS
-    API["API"]-- POST -->SQS
-    SQS-->lambda
-    lambda-->S3_RESULT["Result <br> Bucket"]
+    id1["AOI <br> bucket"]--event-->SQS
+    id1-->lambda
+    id2["API"]--POST-->SQS
+    SQS--trigger-->lambda
+    lambda-->id3["result <br> bucket"]
+    id4["PC 3DEP"]-->lambda
 ```
