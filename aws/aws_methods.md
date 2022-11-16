@@ -1,6 +1,6 @@
 # AWS Methods
 
-## 1. AOI bucket with static Foundation - &check;
+### 1. AOI bucket with static Foundation - &check;
 
 ```mermaid
 flowchart LR
@@ -9,9 +9,9 @@ flowchart LR
     lambda-->S3_RST["result <br> bucket"]
 ```
 
-<br/>
+<br/><br/>
 
-## 2. AOI bucket with step function and dynamic Foundation - &check;
+### 2. AOI bucket with step function and dynamic Foundation - &check;
 
 ```mermaid
 flowchart LR
@@ -24,9 +24,9 @@ flowchart LR
     id5["PC 3DEP"]-->id0
 ```
 
-<br/>
+<br/><br/>
 
-## 3. AOI bucket and API feeding a queue - In flight
+### 3. AOI bucket and API feeding a queue - In flight
 
 ```mermaid
 flowchart LR
@@ -38,6 +38,6 @@ flowchart LR
     id4["PC 3DEP"]-->lambda
 ```
 
-<br/>
+<br/><br/>
 
 ## 4. Cirrus?
