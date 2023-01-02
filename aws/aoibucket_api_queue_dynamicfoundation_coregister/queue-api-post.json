@@ -1,0 +1,10 @@
+{
+    "eventSource": "aws:execute-api",
+    "aoiBucket": "",
+    "aoiFile": "",
+    "fndBucket": "",
+    "fndFile": "",
+    "fndBufferFactor": 2,
+    "codemMinResolution": 1,
+    "codemSolveScale": true
+}

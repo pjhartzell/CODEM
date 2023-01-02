@@ -5,8 +5,8 @@ RUN apt-get update
 RUN apt-get install -y libgl1
 
 # Create and activate the Conda environment
-COPY environment.yml .
-RUN conda env create -f environment.yml
+COPY aws/conda_environments/dynamicfoundation.yml .
+RUN conda env create -f dynamicfoundation.yml
 
 # Automatically activate the conda environment
 RUN echo "source activate codem" >> ~/.bashrc
@@ -17,3 +17,10 @@ COPY src ./src
 COPY readme.md .
 COPY setup.py .
 RUN pip install .
+
+# Lambda
+RUN pip install awslambdaric
+COPY aws/lambda_foundation.py .
+
+ENTRYPOINT [ "python", "-m", "awslambdaric" ]
+CMD [ "lambda_foundation.handler" ]

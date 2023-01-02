@@ -15,8 +15,9 @@
 2. Why would we want to do this?
     - Data are often in different datums, and datum conversions sometimes don't work as well as we want due to georeferencing error.
     - Metadata is often incorrect, and can be easier to just "coregister it" than work out what god-awful projection combination the dataset is in.
-    - _Biggie_: Error exist in real life. Stuff doesn't line up.
-    - _Biggie_: Sometimes we have no georeferencing information.
+    - Biggie: Error exist in real life. Stuff doesn't line up.
+    - Biggie: Sometimes we have no georeferencing information.
+    - _TLDR_: You can take data produced from different sensors/collections/modalities and make them spatially coherent, regardless of errors, datum differences, or metadata deficiencies.
 
 3. Why am I talking about this?
     - A project I worked on towards the end of my prior job

@@ -5,8 +5,8 @@ RUN apt-get update
 RUN apt-get install -y libgl1
 
 # Create and activate the Conda environment
-COPY aws/environment_coregister.yml .
-RUN conda env create -f environment_coregister.yml
+COPY aws/conda_environments/coregister.yml .
+RUN conda env create -f coregister.yml
 
 # Automatically activate the conda environment
 RUN echo "source activate codem" >> ~/.bashrc
@@ -20,7 +20,7 @@ RUN pip install .
 
 # Lambda
 RUN pip install awslambdaric
-COPY aws/lambda_coregister_step.py .
+COPY aws/lambda_coregister.py .
 
 ENTRYPOINT [ "python", "-m", "awslambdaric" ]
-CMD [ "lambda_coregister_step.handler" ]
+CMD [ "lambda_coregister.handler" ]
