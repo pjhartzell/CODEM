@@ -1,0 +1,57 @@
+{
+    "Records": [
+        {
+            "messageId": "6f5ce16c-c07d-4c25-a81f-4ea1bc1288d4",
+            "receiptHandle": "AQEBOf4DH4jENsCKoEUq7W3SrWMNeDVUOoQ9o7uhm3OadYL0I/IKRp6+ijhWWdEVuvg0bhE8DmWhMo1VfqJcbugy7NYd1wDkPOf2MiX6yDHP8an77usDZlBFlmq9ciXPOIVsQLZmdph8hxfgP/jjjRyc3dyvaoAHlE/0ZYyPgKLA2G+xXxsEFwWZ5ud6aNzOv8jO0ILqpvcT/rf2C8yVu0AHoQqJlyj9Lb932Y5qwtg4n8wYEA1Xs0WrZrX0zH3a39hbaFqGZ59GZE+kPk8TfgWh0ZDdcBtPQwu+yVueqHNx0PABAu5bOn1hxv/BOtx+j9V2M8lsFXmmnnKiYJMW2dpLMjHAwzQ1Yr9oOLkYCM4ASeCCSUxGChX08uQkF/wyXQEp",
+            "body": {
+                "Records": [
+                    {
+                        "eventVersion": "2.1",
+                        "eventSource": "aws:s3",
+                        "awsRegion": "us-east-1",
+                        "eventTime": "2023-01-08T13:42:10.869Z",
+                        "eventName": "ObjectCreated:Put",
+                        "userIdentity": {
+                            "principalId": "AWS:AIDAQKXBZ6VUWZGFPCVA7"
+                        },
+                        "requestParameters": {
+                            "sourceIPAddress": "98.216.153.63"
+                        },
+                        "responseElements": {
+                            "x-amz-request-id": "AX9FP252BSDZ2KDN",
+                            "x-amz-id-2": "M/21k5ojcslIH2zaF0vGhUhrPomLd/uj59s9ICeOzF7siW15tSTtu/g6/4vhm8G6r3gtL2QWDQDM2+wuasyYHTX0077ReUKD"
+                        },
+                        "s3": {
+                            "s3SchemaVersion": "1.0",
+                            "configurationId": "object-creation",
+                            "bucket": {
+                                "name": "cq-aoi-trigger",
+                                "ownerIdentity": {
+                                    "principalId": "A2CHGMIVUAK3EZ"
+                                },
+                                "arn": "arn:aws:s3:::cq-aoi-trigger"
+                            },
+                            "object": {
+                                "key": "AOI-DigitalSurfaceModel.tif",
+                                "size": 1601878,
+                                "eTag": "09859248bfc1cb3aeb955d7d1ecfa93a",
+                                "sequencer": "0063BAC831087BA8BD"
+                            }
+                        }
+                    }
+                ]
+            },
+            "attributes": {
+                "ApproximateReceiveCount": "1",
+                "SentTimestamp": "1673185331815",
+                "SenderId": "AIDAJHIPRHEMV73VRJEBU",
+                "ApproximateFirstReceiveTimestamp": "1673185331828"
+            },
+            "messageAttributes": {},
+            "md5OfBody": "96af4ca6fdb3c0486cedd563e8196796",
+            "eventSource": "aws:sqs",
+            "eventSourceARN": "arn:aws:sqs:us-east-1: 023022138729:codem",
+            "awsRegion": "us-east-1"
+        }
+    ]
+}

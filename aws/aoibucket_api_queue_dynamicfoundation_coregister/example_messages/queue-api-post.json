@@ -1,0 +1,8 @@
+{
+    "aoiFile": "text",
+    "fndFile": "text",
+    "fndBufferFactor": "float",
+    "codemMinResolution": "float",
+    "codemSolveScale": "bool",
+    "email": "text"
+}

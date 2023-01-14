@@ -1,1 +1,9 @@
-Switch to REST API and implement validation via json schema model
+Switch to AWS REST API or fastapi:
+    - validate message body
+    - response on successful validation?
+
+Set up success and failure emails
+
+Understand dead letter queue lag
+
+Enhancement = handle large files, greater than the 512MB /tmp directory
